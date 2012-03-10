@@ -7,11 +7,23 @@ template <class T>
 class Vector
 {
 public:
-    Vector(int Size);
-    ~Vector();
+    Vector(int Size)
+    {
+        pElem = new T[Size];
+        memset(pElem,0,Size*sizeof(T));
+    }
 
-    T scalarMultiply(const Vector<T>& v) const;
-    T magnitude() const;
+    ~Vector() { delete[] pElem;  }
+
+    T scalarMultiply(const Vector<T>& v) const
+    {
+        T ret;
+        for (int i = 0;i < nSize;++i)
+           ret += v[i]*pElem[i];
+        return ret;
+    }
+
+    T magnitude() const {  return sqrt(scalarMultiply(*this)); }
     int size() const { return nSize; }
 
     T& operator[](const int& index) { return pElem[index]; }
@@ -21,5 +33,7 @@ private:
     int nSize;
 
 };
+
+typedef Vector<double> VectorD;
 
 #endif // VECTOR_H

@@ -11,11 +11,13 @@ private:
     {
         friend class LinkedList;
         private:
-            T Data;
+            T& Data;
             ListNode* pNext;
         public:
-            ListNode(const T& Item) { Data = Item; }
+            ListNode(const T& Item)
+            { Data = Item; }
 
+            ~ListNode() { }
 
             T& data() { return Data; }
             ListNode* next() { return pNext; }
@@ -25,10 +27,31 @@ private:
     int nCount;
 
 public:
-    LinkedList();
-    ~LinkedList();
+    LinkedList()
+    {
+        pHead = pTail = NULL;
+        nCount = 0;
+    }
 
-    void pushback(const T& item);
+    ~LinkedList()
+    {
+        for (iterator i = begin();i != end();++i)
+           delete &(*i);
+    }
+
+    void pushback(const T& item)
+    {
+        ListNode *node = new ListNode(item);
+        if (pHead == NULL && pTail == NULL)
+          pHead = pTail = node;
+
+        if (pHead != NULL && pTail != NULL){
+          pTail->pNext = node;
+          pTail = node;
+        }
+
+        ++nCount;
+    }
 
     class iterator
     {
@@ -37,7 +60,7 @@ public:
             ListNode* pCurrent;
         public:
             iterator() {}
-            T& operator*() { return pCurrent; }
+            T& operator*() { return pCurrent->Data; }
 
             bool operator==(const iterator& X) const { return pCurrent == X.pCurrent;  }
 
@@ -57,8 +80,18 @@ public:
             }
         };
 
-        iterator begin() const;
-        iterator end() const;
+        iterator begin() const
+        {
+            iterator ret;
+            ret.pCurrent = pHead;
+            return ret;
+        }
+        iterator end() const
+        {
+            iterator ret;
+            ret.pCurrent = pTail;
+            return ret;
+        }
 };
 
 #endif // LINKEDLIST_H
