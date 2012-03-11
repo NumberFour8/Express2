@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QtGui/QMainWindow>
+#include "loader.h"
 
 namespace Ui
 {
@@ -23,7 +24,10 @@ class MainWindow : public QMainWindow
     // napr ui->view pro komponentu QGraphicsView vpravo v okne a
     // ui->transformList pro seznam transformaci vlevo v okne
     Ui::MainWindow *ui;
-       
+    Loader ldr;
+
+    void Render();
+
   private slots:
     void moveItemUp ();
     void moveItemDown ();

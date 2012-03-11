@@ -2,55 +2,78 @@
 
 Loader::Loader(const char* szFile) : transforms()
 {
-    ifstream file(szFile);
+    ifstream file;
+    file.open(szFile);
 
     if (file.is_open())
     {
         string cmd;
-        while(file.good())
-        {
+        while(file.good()){
             cmd.clear();
             file >> cmd;
 
-            if (cmd == "posunuti"){
-                double x,y;
-                file >> x >> y;
+            TransformType tt = getTransformType(cmd);
+            if (tt == ttUnknown) continue;
 
-                MatrixD t(3,3);
-                t(0,0) = 1; t(0,1) = 0; t(0,2) = x;
-                t(1,0) = 0; t(1,1) = 1; t(1,2) = y;
-                t(2,0) = 0; t(2,1) = 0; t(2,2) = 1;
+            Transform Tr;
+            Tr.type = tt;
 
-                transforms.pushback(t);
-                continue;
-            }
-            else if (cmd == "otoceni"){
-                double phi;
-                file >> phi;
+            switch (tt) {
+                case ttTranslate:
+                    file >> Tr.p1 >> Tr.p2;
 
-                MatrixD t(3,3);
-                t(0,0) = cos(phi);  t(0,1) = sin(phi); t(0,2) = 0;
-                t(1,0) = -sin(phi); t(1,1) = cos(phi); t(1,2) = 0;
-                t(2,0) = 0;         t(2,1) = 0;        t(2,2) = 1;
+                    Tr.T(0,0) = 1; Tr.T(0,1) = 0; Tr.T(0,2) = Tr.p1;
+                    Tr.T(1,0) = 0; Tr.T(1,1) = 1; Tr.T(1,2) = Tr.p2;
+                    Tr.T(2,0) = 0; Tr.T(2,1) = 0; Tr.T(2,2) = 1;
+                break;
+                case ttRotate:
+                    file >> Tr.p1;
+                    Tr.p1 /= M_PI/180;
 
-                transforms.pushback(t);
-                continue;
-            }
-            else if (cmd == "skalovani"){
-                double sx,sy;
-                file >> sx >> sy;
+                    Tr.T(0,0) = cos(Tr.p1);  Tr.T(0,1) = sin(Tr.p1); Tr.T(0,2) = 0;
+                    Tr.T(1,0) = -sin(Tr.p1); Tr.T(1,1) = cos(Tr.p1); Tr.T(1,2) = 0;
+                    Tr.T(2,0) = 0;           Tr.T(2,1) = 0;          Tr.T(2,2) = 1;
+                break;
+                case ttScale:
+                    file >> Tr.p1 >> Tr.p2;
 
-                MatrixD t(3,3);
-                t(0,0) = sx; t(0,1) = 0;  t(0,2) = 0;
-                t(1,0) = 0;  t(1,1) = sy; t(1,2) = 0;
-                t(2,0) = 0;  t(2,1) = 0;  t(2,2) = 1;
-
-                transforms.pushback(t);
-                continue;
-            }
+                    Tr.T(0,0) = Tr.p1; Tr.T(0,1) = 0;     Tr.T(0,2) = 0;
+                    Tr.T(1,0) = 0;     Tr.T(1,1) = Tr.p2; Tr.T(1,2) = 0;
+                    Tr.T(2,0) = 0;     Tr.T(2,1) = 0;     Tr.T(2,2) = 1;
+                break;
+                default: break;
+            };
+            transforms.pushback(Tr);
 
         }
         file.close();
     }
 }
 
+MatrixD& Loader::getTransformMatrix(const int id)
+{
+    LinkedList<Transform>::iterator it = transforms.begin();
+    for (int i = 0;i < id; ++i) ++it;
+    return (*it).T;
+}
+
+string Loader::getTransformString(TransformType Type)
+{
+    switch (Type){
+       case ttTranslate: return "posunuti";
+       case ttRotate: return "otoceni";
+       case ttScale: return "skalovani";
+       default: return "n/a";
+    };
+}
+
+Loader::TransformType Loader::getTransformType(string Name)
+{
+    if (Name == "posunuti")
+      return ttTranslate;
+    else if (Name == "skalovani")
+      return ttScale;
+    else if (Name == "otoceni")
+      return ttRotate;
+    else return ttUnknown;
+}

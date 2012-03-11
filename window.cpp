@@ -2,14 +2,22 @@
 #include "ui_form.h"
 
 MainWindow::MainWindow(QWidget *parent)
-  : QMainWindow(parent), ui(new Ui::MainWindow)
+    : QMainWindow(parent), ui(new Ui::MainWindow), ldr("C:\\test.txt")
 {
-  ui->setupUi(this);
+  ui->setupUi(this); 
+
 }
 
 MainWindow::~MainWindow()
 {
   delete ui;
+}
+
+void MainWindow::Render()
+{
+    QGraphicsScene MyScene;
+    MyScene.setSceneRect(ui->view->x(),ui->view->y(),ui->view->width(),ui->view->height());
+    ui->view->setScene(&MyScene);
 }
 
 void MainWindow::moveItemUp ()
