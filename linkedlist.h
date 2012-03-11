@@ -14,10 +14,8 @@ private:
             T& Data;
             ListNode* pNext;
         public:
-            ListNode(const T& Item)
-            { Data = Item; }
-
-            ~ListNode() { }
+            ListNode(T& Item) : Data(Item)
+            { pNext = NULL; }
 
             T& data() { return Data; }
             ListNode* next() { return pNext; }
@@ -39,7 +37,7 @@ public:
            delete &(*i);
     }
 
-    void pushback(const T& item)
+    void pushback(T& item)
     {
         ListNode *node = new ListNode(item);
         if (pHead == NULL && pTail == NULL)
@@ -49,6 +47,7 @@ public:
           pTail->pNext = node;
           pTail = node;
         }
+
 
         ++nCount;
     }

@@ -17,8 +17,6 @@ public:
 
     LinkedList<MatrixD>& getTransforms() { return transforms; }
 
-    MatrixD& operator[](const int& index) { return transforms[index]; }
-
 private:
     LinkedList<MatrixD> transforms;
 

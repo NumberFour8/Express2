@@ -1,6 +1,8 @@
 #ifndef MATRIX_H
 #define MATRIX_H
 
+#include <stdio.h>
+#include <string.h>
 #include <assert.h>
 #include "vector.h"
 
@@ -10,6 +12,7 @@ class Matrix
 public:
     Matrix(int nRows,int nCols)
     {
+        rows = nRows, cols = nCols;
         pElem = new T[nRows*nCols];
         memset(pElem,0,nRows*nCols*sizeof(T));
     }
@@ -78,7 +81,7 @@ public:
 
 private:
     T* pElem;
-    const int rows,cols;
+    int rows,cols;
 
 };
 
