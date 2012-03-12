@@ -92,7 +92,7 @@ public:
         iterator end() const
         {
             iterator ret;
-            ret.pCurrent = pTail;
+            ret.pCurrent = /*pTail->pNext*/NULL;
             return ret;
         }
 

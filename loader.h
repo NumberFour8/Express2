@@ -22,6 +22,7 @@ public:
     };
 
     Loader(const char* szFile);
+    ~Loader();
 
     LinkedList<Transform>& getTransforms() { return transforms; }
     MatrixD& getTransformMatrix(const int id);

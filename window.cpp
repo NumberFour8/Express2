@@ -6,6 +6,11 @@ MainWindow::MainWindow(QWidget *parent)
 {
   ui->setupUi(this); 
 
+  LinkedList<Loader::Transform>& ll = ldr.getTransforms();
+  for (LinkedList<Loader::Transform>::iterator i = ll.begin();i != ll.end();++i){
+      ui->transformList->addItem(QString(Loader::getTransformString((*i).type).c_str()));
+  }
+
 }
 
 MainWindow::~MainWindow()
