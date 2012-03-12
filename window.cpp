@@ -8,7 +8,15 @@ MainWindow::MainWindow(QWidget *parent)
 
   LinkedList<Loader::Transform>& ll = ldr.getTransforms();
   for (LinkedList<Loader::Transform>::iterator i = ll.begin();i != ll.end();++i){
-      ui->transformList->addItem(QString(Loader::getTransformString((*i).type).c_str()));
+      Loader::Transform& Tr = *i;
+      const char* name = Loader::getTransformString(Tr.type).c_str();
+
+      QString label;
+      if (Tr.type != Loader::ttRotate)
+        label.sprintf("%s [%d,%d]",name,(int)Tr.p1,(int)Tr.p2);
+      else label.sprintf("%s [%d]",name,(int)Tr.p1);
+
+      ui->transformList->addItem(label);
   }
 
 }
