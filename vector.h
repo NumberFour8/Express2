@@ -2,15 +2,28 @@
 #define VECTOR_H
 
 #include <math.h>
+#include <cstdarg>
 
 template <class T>
 class Vector
 {
 public:
-    Vector(int Size)
+    Vector(int Size) : nSize(Size)
     {
         pElem = new T[Size];
         memset(pElem,0,Size*sizeof(T));
+    }
+
+    Vector(int Size,...) : nSize(Size)
+    {
+        pElem = new T[Size];
+        memset(pElem,0,Size*sizeof(T));
+
+        va_list vals;
+        va_start(vals,Size);
+        for (int i = 0;i < Size;++i)
+            pElem[i] = va_arg(vals,T);
+        va_end(vals);
     }
 
     ~Vector() { delete[] pElem;  }
