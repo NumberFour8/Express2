@@ -14,14 +14,14 @@ public:
         memset(pElem,0,Size*sizeof(T));
     }
 
-    Vector(int Size,...) : nSize(Size)
+    Vector(unsigned int Size,...) : nSize(Size)
     {
         pElem = new T[Size];
         memset(pElem,0,Size*sizeof(T));
 
         va_list vals;
         va_start(vals,Size);
-        for (int i = 0;i < Size;++i)
+        for (unsigned int i = 0;i < Size;++i)
             pElem[i] = va_arg(vals,T);
         va_end(vals);
     }

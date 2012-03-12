@@ -26,7 +26,7 @@ public:
     T& operator[] (const int& index) const { return pElem[index]; }
     T& operator() (const int i,const int j) const { return pElem[i*cols+j]; }
 
-    Vector<T> operator*(const Vector<T>& V) const
+    Vector<T> operator*(Vector<T>& V) const
     {
         int sz = V.size();
         assert(sz==cols);
@@ -34,7 +34,7 @@ public:
         Vector<T> Ret(sz);
         for (int i = 0;i < sz;++i){
             for (int j = 0;j < sz;++i)
-                Ret[i] += V[j]*(*this)(i,j);
+                Ret[i] += V[j]*(this->operator ()(i,j));
         }
 
         return Ret;
