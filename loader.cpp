@@ -56,7 +56,7 @@ Loader::~Loader()
         delete &(*i);
 }
 
-MatrixD& Loader::getTransformMatrix(const int id)
+Matrix<double>& Loader::getTransformMatrix(const int id)
 {
     LinkedList<Transform>::iterator it = transforms.begin();
     for (int i = 0;i < id; ++i) ++it;

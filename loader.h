@@ -25,7 +25,7 @@ public:
     ~Loader();
 
     LinkedList<Transform>& getTransforms() { return transforms; }
-    MatrixD& getTransformMatrix(const int id);
+    Matrix<double>& getTransformMatrix(const int id);
 
     static string getTransformString(TransformType Type);
     static TransformType getTransformType(string Name);

@@ -6,14 +6,6 @@ MainWindow::MainWindow(QWidget *parent)
 {
   ui->setupUi(this); 
 
- Matrix<double> m(2,2);
- m(0,0) = 1; m(0,1) = 2;
- m(1,0) = 3; m(1,1) = 3;
-
- Vector<double> v(2,1,4);
-
- Vector<double> r = m*v;
-
   LinkedList<Loader::Transform>& ll = ldr.getTransforms();
   for (LinkedList<Loader::Transform>::iterator i = ll.begin();i != ll.end();++i){
       Loader::Transform& Tr = *i;

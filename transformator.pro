@@ -12,12 +12,14 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         window.cpp \
-    loader.cpp
+    loader.cpp \
+    grect.cpp
 
 HEADERS  += window.h \
     matrix.h \
     vector.h \
     linkedlist.h \
-    loader.h
+    loader.h \
+    grect.h
 
 FORMS    += form.ui

@@ -10,20 +10,7 @@ class Vector
 public:
     Vector(int Size) : nSize(Size)
     {
-        pElem = new T[Size];
-        memset(pElem,0,Size*sizeof(T));
-    }
-
-    Vector(unsigned int Size,...) : nSize(Size)
-    {
-        pElem = new T[Size];
-        memset(pElem,0,Size*sizeof(T));
-
-        va_list vals;
-        va_start(vals,Size);
-        for (unsigned int i = 0;i < Size;++i)
-            pElem[i] = va_arg(vals,T);
-        va_end(vals);
+        pElem = new T[Size]();
     }
 
     ~Vector() { delete[] pElem;  }
@@ -46,7 +33,5 @@ private:
     int nSize;
 
 };
-
-typedef Vector<double> VectorD;
 
 #endif // VECTOR_H

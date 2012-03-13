@@ -13,8 +13,7 @@ public:
     Matrix(int nRows,int nCols)
     {
         rows = nRows, cols = nCols;
-        pElem = new T[nRows*nCols];
-        memset(pElem,0,nRows*nCols*sizeof(T));
+        pElem = new T[nRows*nCols]();
     }
 
     ~Matrix() { delete[] pElem; }
@@ -24,7 +23,7 @@ public:
     int getCols() const { return cols; }
 
     T& operator[] (const int& index) const { return pElem[index]; }
-    T& operator() (const int i,const int j) const { return pElem[i*cols+j]; }
+    T& operator() (const int i,const int j) const { return getElem(i,j); }
 
     Vector<T> operator*(Vector<T>& V) const
     {
@@ -33,8 +32,8 @@ public:
 
         Vector<T> Ret(sz);
         for (int i = 0;i < sz;++i){
-            for (int j = 0;j < sz;++i)
-                Ret[i] += V[j]*(this->operator ()(i,j));
+            for (int j = 0;j < sz;++j)
+                Ret[i] += V[j]*getElem(i,j);
         }
 
         return Ret;
@@ -45,15 +44,13 @@ public:
         assert(M.getRows()==cols);
 
         Matrix<T> Ret(rows,M.getCols());
-        Matrix<T>& A = *this;
-
-        for (int i = 0;i < M.getCols();++i){
-           for (int j = 0;j < rows;++j){
-             for (int k = 0;k < cols;++k){
-                Ret(j,i) = A(j,k)*M(k,i);
-             }
+        for (int i = 0;i < rows;i++){
+           for (int j = 0; j < M.getCols(); j++){
+              for (int k = 0; k < cols; k++)
+                 Ret(i, j) += getElem(i, k) * M(k, j);
            }
         }
+
         return Ret;
     }
 
@@ -61,6 +58,7 @@ public:
     friend Matrix<U> operator+(const Matrix<U>& A,const Matrix<U>& B)
     {
         assert(A.dimension()==B.dimension());
+
         Matrix<U> Ret;
         for (int i = 0;i < A.dimension();++i)
            Ret[i] = A.pElem[i]+B.pElem[i];
@@ -83,8 +81,7 @@ private:
     T* pElem;
     int rows,cols;
 
+    inline T& getElem(const int i,const int j) const { return pElem[i*cols+j]; }
 };
-
-typedef Matrix<double> MatrixD;
 
 #endif // MATRIX_H
