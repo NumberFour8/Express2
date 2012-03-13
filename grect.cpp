@@ -7,8 +7,8 @@ void GRect::paint(QPainter *painter, const QStyleOptionGraphicsItem*, QWidget *)
     QColor Pink(227,175,226);
 
     painter->setPen(Border);
-    painter->fillRect(getRect(),Body);
-    painter->drawRect(getRect());
+    painter->fillRect(boundingRect(),Body);
+    painter->drawRect(boundingRect());
 
     painter->setPen(Pink);
     painter->setBrush(Pink);

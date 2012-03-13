@@ -122,6 +122,8 @@ public:
             a.pCurrent->pNext = b.pCurrent->pNext;
             b.pCurrent->pNext = t;
         }
+
+        int count() const { return nCount; }
 };
 
 #endif // LINKEDLIST_H

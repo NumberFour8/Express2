@@ -3,6 +3,7 @@
 
 #include <QtGui/QMainWindow>
 #include "loader.h"
+#include "grect.h"
 
 namespace Ui
 {
@@ -25,6 +26,7 @@ class MainWindow : public QMainWindow
     // ui->transformList pro seznam transformaci vlevo v okne
     Ui::MainWindow *ui;
     Loader ldr;
+    GRect **objects;
 
     void Render();
 

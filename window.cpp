@@ -7,7 +7,10 @@ MainWindow::MainWindow(QWidget *parent)
   ui->setupUi(this); 
 
   LinkedList<Loader::Transform>& ll = ldr.getTransforms();
-  for (LinkedList<Loader::Transform>::iterator i = ll.begin();i != ll.end();++i){
+  objects = new GRect*[ll.count()];
+
+  int j = 0;
+  for (LinkedList<Loader::Transform>::iterator i = ll.begin();i != ll.end();++i,++j){
       Loader::Transform& Tr = *i;
       const char* name = Loader::getTransformString(Tr.type).c_str();
 
@@ -17,13 +20,20 @@ MainWindow::MainWindow(QWidget *parent)
       else label.sprintf("%s [%d]",name,(int)Tr.p1);
 
       ui->transformList->addItem(label);
+
+      objects[j] = new GRect(j,5.0f);
+      objects[j]->position()[0] = objects[j]->position()[1] = 0;
   }
 
 }
 
 MainWindow::~MainWindow()
 {
-  delete ui;
+    for (int i = 0;i < ldr.getTransforms().count();++i)
+        delete objects[i];
+    delete[] objects;
+
+    delete ui;
 }
 
 void MainWindow::Render()
@@ -31,6 +41,8 @@ void MainWindow::Render()
     QGraphicsScene MyScene;
     MyScene.setSceneRect(ui->view->x(),ui->view->y(),ui->view->width(),ui->view->height());
     ui->view->setScene(&MyScene);
+
+
 }
 
 void MainWindow::moveItemUp ()

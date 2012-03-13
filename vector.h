@@ -26,7 +26,7 @@ public:
     T magnitude() const {  return sqrt(scalarMultiply(*this)); }
     int size() const { return nSize; }
 
-    T& operator[](const int& index) { return pElem[index]; }
+    T& operator[](const int& index) const { return pElem[index]; }
 
 private:
     T* pElem;
