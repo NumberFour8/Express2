@@ -42,6 +42,10 @@ void MainWindow::Render()
     MyScene.setSceneRect(ui->view->x(),ui->view->y(),ui->view->width(),ui->view->height());
     ui->view->setScene(&MyScene);
 
+    for (int i = 0;i < 100;i+=5){
+       MyScene.addLine(i,0,i,MyScene.height(),QPen(QColor(0xef,0xef,0xef)));
+       MyScene.addLine(0,i,MyScene.width(),i,QPen(QColor(0xef,0xef,0xef)));
+    }
 
 }
 
