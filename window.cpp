@@ -23,10 +23,11 @@ MainWindow::MainWindow(QWidget *parent)
 
       ui->transformList->addItem(label);
 
-      MyObjects[j] = new GRect(j,5.0f);
-      MyObjects[j]->position()[0] = MyObjects[j]->position()[1] = 0;
+      MyObjects[j] = new GRect(j,20.0f);
   }
 
+  MyScene->setSceneRect(-600,-600,1200,1200);
+  Render();
 
 }
 
@@ -42,10 +43,16 @@ MainWindow::~MainWindow()
 
 void MainWindow::Render()
 {
-    for (int i = 0;i < 1000;i+=20){
-       MyScene->addLine(i,0,i,1000,QPen(QColor(0xef,0xef,0xef)));
-       MyScene->addLine(0,i,1000,i,QPen(QColor(0xef,0xef,0xef)));
+    QColor grid(0xcc,0xc6,0xc6);
+    QColor cross(83,83,83);
+
+    for (int i = -600;i < 600;i+=20){
+       MyScene->addLine(i,-600,i,600,QPen(grid));
+       MyScene->addLine(-600,i,600,i,QPen(grid));
     }
+    MyScene->addLine(0,-600,0,600,QPen(cross));
+    MyScene->addLine(-600,0,600,0,QPen(cross));
+    MyScene->addItem(MyObjects[0]);
 
 }
 

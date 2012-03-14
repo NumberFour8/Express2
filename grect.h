@@ -4,15 +4,17 @@
 #include <QGraphicsItem>
 #include <QRectF>
 #include <QPainter>
+#include <QPointF>
 
 #include "vector.h"
 
 class GRect : public QGraphicsItem
 {
     public:
-        GRect(int ID,float Size) : nID(ID), fSize(Size),pos(2), sOpacity(255) { }
+        GRect(int ID,float Size);
+        ~GRect();
 
-        QRectF boundingRect() const { return QRectF(pos[0]-fSize,pos[1]+fSize,fSize*2,fSize*2);  }
+        QRectF boundingRect() const { return QRectF(pPoints[0].x(),pPoints[0].y(),fSize*2,fSize*2);  }
 
         void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
@@ -29,14 +31,19 @@ class GRect : public QGraphicsItem
         void setAlpha(short opacity) { sOpacity = opacity; }
         short getAlpha() const { return sOpacity; }
 
-        Vector<float>& position() { return pos; }
+        static Vector<float> Point2Vector(const QPointF& pt)
+        {
+            Vector<float> Ret(2);
+            Ret[0] = pt.x(); Ret[1] = pt.y();
+            return Ret;
+        }
 
     private:
         int nID;
         bool bSelected;
 
         float fSize;
-        Vector<float> pos;
+        QPointF *pPoints;
         short sOpacity;
 
 };

@@ -2,7 +2,6 @@
 #define VECTOR_H
 
 #include <math.h>
-#include <cstdarg>
 
 template <class T>
 class Vector
