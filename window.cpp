@@ -39,11 +39,11 @@ void MainWindow::TransformAndUpdate()
     LinkedList<Loader::Transform>& ll = MyLoader.getTransforms();
     for (LinkedList<Loader::Transform>::iterator i = ll.begin();i != ll.end();++i,++j){
         AddTransformToList(*i);
-        //MyMatrix = MyMatrix*((*i).T);
+        MyMatrix = MyMatrix*((*i).T);
 
         MyObjects[j] = new GRect(j,20.0f);
         MyObjects[j]->setAlpha(200);
-        MyObjects[j]->transform((*i).T);
+        MyObjects[j]->transform(MyMatrix);
     }
 }
 

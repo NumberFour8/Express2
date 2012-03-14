@@ -61,6 +61,22 @@ public:
         return Ret;
     }
 
+    Matrix<T>& operator=(const Matrix<T>& M)
+    {
+        if (&M != this){
+          if (M.dimension() == rows*cols)
+              memcpy(pElem,M.pElem,rows*cols*sizeof(T));
+          else {
+              delete[] pElem;
+              pElem = new T[M.dimension()];
+              memcpy(pElem,M.pElem,M.dimension()*sizeof(T));
+          }
+          rows = M.getRows();
+          cols = M.getCols();
+        }
+        return *this;
+    }
+
     template <class U>
     friend Matrix<U> operator+(const Matrix<U>& A,const Matrix<U>& B)
     {
