@@ -22,6 +22,13 @@ public:
     int getRows() const { return rows; }
     int getCols() const { return cols; }
 
+    void identity()
+    {
+        assert(cols==rows);
+        for (int i = 0;i < rows;++i)
+           operator()(i,i) = 1;
+    }
+
     T& operator[] (const int& index) const { return pElem[index]; }
     T& operator() (const int i,const int j) const { return getElem(i,j); }
 

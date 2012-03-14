@@ -32,7 +32,8 @@ class MainWindow : public QMainWindow
 
 
     void Render();
-
+    void TransformAndUpdate();
+    void AddTransformToList(const Loader::Transform& Tr);
 
   private slots:
     void moveItemUp ();

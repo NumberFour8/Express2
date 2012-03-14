@@ -7,6 +7,7 @@
 #include <QPointF>
 
 #include "vector.h"
+#include "matrix.h"
 
 class GRect : public QGraphicsItem
 {
@@ -31,12 +32,10 @@ class GRect : public QGraphicsItem
         void setAlpha(short opacity) { sOpacity = opacity; }
         short getAlpha() const { return sOpacity; }
 
-        static Vector<float> Point2Vector(const QPointF& pt)
-        {
-            Vector<float> Ret(2);
-            Ret[0] = pt.x(); Ret[1] = pt.y();
-            return Ret;
-        }
+        void transform(const Matrix<float>& T);
+
+        static Vector<float> Point2Vector(const QPointF& pt);
+        static QPointF Vector2Point(const Vector<float>& v) { return QPointF(v[0],v[1]); }
 
     private:
         int nID;

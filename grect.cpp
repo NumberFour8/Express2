@@ -3,10 +3,10 @@
 GRect::GRect(int ID, float Size) : nID(ID), fSize(Size), sOpacity(255)
 {
     pPoints = new QPointF[4];
-    pPoints[0] = QPoint(-Size,-Size);
-    pPoints[1] = QPointF(Size,-Size);
-    pPoints[2] = QPointF(Size,Size);
-    pPoints[3] = QPointF(-Size,Size);
+    pPoints[0].setX(-Size); pPoints[0].setY(-Size);
+    pPoints[1].setX(Size);  pPoints[1].setY(-Size);
+    pPoints[2].setX(Size);  pPoints[2].setY(Size);
+    pPoints[3].setX(-Size); pPoints[3].setY(Size);
 
 }
 
@@ -14,6 +14,22 @@ GRect::~GRect()
 {
     delete[] pPoints;
 }
+
+Vector<float> GRect::Point2Vector(const QPointF& pt)
+{
+    Vector<float> Ret(3);
+    Ret[0] = pt.x(); Ret[1] = pt.y(); Ret[2] = 1;
+    return Ret;
+}
+
+void GRect::transform(const Matrix<float>& T)
+{
+    for (int i = 0;i < 4;++i){
+        Vector<float> v = Point2Vector(pPoints[i]);
+        pPoints[i] = Vector2Point(T * v);
+    }
+}
+
 
 void GRect::paint(QPainter *painter, const QStyleOptionGraphicsItem*, QWidget *)
 {
