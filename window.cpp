@@ -2,14 +2,16 @@
 #include "ui_form.h"
 
 MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent), ui(new Ui::MainWindow), ldr("test.txt")
+    : QMainWindow(parent), ui(new Ui::MainWindow), MyLoader("test.txt")
 {
   ui->setupUi(this); 
 
-  LinkedList<Loader::Transform>& ll = ldr.getTransforms();
-  objects = new GRect*[ll.count()];
+  MyObjects = new GRect*[MyLoader.getTransforms().count()];
+  MyScene = new QGraphicsScene;
+  ui->view->setScene(MyScene);
 
   int j = 0;
+  LinkedList<Loader::Transform>& ll = MyLoader.getTransforms();
   for (LinkedList<Loader::Transform>::iterator i = ll.begin();i != ll.end();++i,++j){
       Loader::Transform& Tr = *i;
       const char* name = Loader::getTransformString(Tr.type).c_str();
@@ -21,30 +23,28 @@ MainWindow::MainWindow(QWidget *parent)
 
       ui->transformList->addItem(label);
 
-      objects[j] = new GRect(j,5.0f);
-      objects[j]->position()[0] = objects[j]->position()[1] = 0;
+      MyObjects[j] = new GRect(j,5.0f);
+      MyObjects[j]->position()[0] = MyObjects[j]->position()[1] = 0;
   }
+
 
 }
 
 MainWindow::~MainWindow()
 {
-    for (int i = 0;i < ldr.getTransforms().count();++i)
-        delete objects[i];
-    delete[] objects;
+    for (int i = 0;i < MyLoader.getTransforms().count();++i)
+        delete MyObjects[i];
+    delete[] MyObjects;
 
+    delete MyScene;
     delete ui;
 }
 
 void MainWindow::Render()
 {
-    QGraphicsScene MyScene;
-    MyScene.setSceneRect(ui->view->x(),ui->view->y(),ui->view->width(),ui->view->height());
-    ui->view->setScene(&MyScene);
-
-    for (int i = 0;i < 100;i+=5){
-       MyScene.addLine(i,0,i,MyScene.height(),QPen(QColor(0xef,0xef,0xef)));
-       MyScene.addLine(0,i,MyScene.width(),i,QPen(QColor(0xef,0xef,0xef)));
+    for (int i = 0;i < 1000;i+=20){
+       MyScene->addLine(i,0,i,1000,QPen(QColor(0xef,0xef,0xef)));
+       MyScene->addLine(0,i,1000,i,QPen(QColor(0xef,0xef,0xef)));
     }
 
 }

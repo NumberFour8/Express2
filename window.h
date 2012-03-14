@@ -25,10 +25,14 @@ class MainWindow : public QMainWindow
     // napr ui->view pro komponentu QGraphicsView vpravo v okne a
     // ui->transformList pro seznam transformaci vlevo v okne
     Ui::MainWindow *ui;
-    Loader ldr;
-    GRect **objects;
+
+    Loader MyLoader;
+    GRect **MyObjects;
+    QGraphicsScene *MyScene;
+
 
     void Render();
+
 
   private slots:
     void moveItemUp ();
