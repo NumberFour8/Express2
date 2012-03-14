@@ -24,6 +24,7 @@ MainWindow::MainWindow(QWidget *parent)
       ui->transformList->addItem(label);
 
       MyObjects[j] = new GRect(j,20.0f);
+      MyObjects[j]->setAlpha(200);
   }
 
   MyScene->setSceneRect(-600,-600,1200,1200);

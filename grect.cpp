@@ -26,9 +26,9 @@ void GRect::paint(QPainter *painter, const QStyleOptionGraphicsItem*, QWidget *)
     painter->drawPolygon(pPoints,4);
 
     painter->setPen(Qt::black);
-    painter->drawText(QRectF(pPoints[0].x()+2*fSize/3,pPoints[0].y()+2*fSize/3,fSize,fSize),QString::number(nID));
+    painter->drawText(QRectF(pPoints[0].x()+4*fSize/5,pPoints[0].y()+3*fSize/5,fSize,fSize),QString::number(nID));
 
     painter->setPen(Corner);
     painter->setBrush(Corner);
-    painter->drawEllipse(pPoints[0],5,5);
+    painter->drawEllipse(pPoints[0],3,3);
 }
