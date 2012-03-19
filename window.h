@@ -27,6 +27,7 @@ class MainWindow : public QMainWindow
     // ui->transformList pro seznam transformaci vlevo v okne
     Ui::MainWindow *ui;
 
+    const int nScalingFactor; // Škálovací faktor
     Loader MyLoader;
     GRect **MyObjects;
     QGraphicsScene *MyScene;

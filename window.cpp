@@ -1,10 +1,8 @@
 #include "window.h"
 #include "ui_form.h"
 
-const int nScalingFactor = 20; // Škálovací faktor
-
 MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent), ui(new Ui::MainWindow), MyLoader("test.txt",nScalingFactor)
+    : QMainWindow(parent), ui(new Ui::MainWindow), nScalingFactor(20), MyLoader("test.txt",nScalingFactor)
 {
   ui->setupUi(this); 
 
