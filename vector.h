@@ -27,6 +27,21 @@ public:
 
     T& operator[](const int& index) const { return pElem[index]; }
 
+    Vector<T>& operator=(const Vector<T>& V)
+    {
+        if (&V != this){
+          if (V.size() == nSize)
+              memcpy(pElem,V.pElem,nSize*sizeof(T));
+          else {
+              delete[] pElem;
+              pElem = new T[V.size()];
+              memcpy(pElem,V.pElem,V.size()*sizeof(T));
+          }
+          nSize = V.size();
+        }
+        return *this;
+    }
+
 private:
     T* pElem;
     int nSize;

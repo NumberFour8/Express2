@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QtGui/QMainWindow>
+#include <QTextStream>
 #include "loader.h"
 #include "grect.h"
 
@@ -33,7 +34,7 @@ class MainWindow : public QMainWindow
 
     void Render();
     void TransformAndUpdate();
-    void AddTransformToList(const Loader::Transform& Tr);
+    void AddTransformToList(const int& id,const Loader::Transform& Tr);
 
   private slots:
     void moveItemUp ();
