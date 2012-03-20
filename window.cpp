@@ -4,7 +4,7 @@
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow),
-      SceneRect(-600,-600,1200,1200), nScalingFactor(20),
+      SceneRect(-600,-600,1200,1200), nScalingFactor(20), // Velikost scény a škálovací faktor
       MyLoader(),MyObjects(NULL)
 {
   ui->setupUi(this); 

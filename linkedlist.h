@@ -106,7 +106,7 @@ public:
             assert(a >= 0 && b >= 0 && max(a,b) < nCount);
             if (a == b) return;
 
-            ListNode* prevA,*A,*prevB,*B,*t;
+            ListNode* prevA = NULL,*A = NULL,*prevB = NULL,*B = NULL,*t = NULL;
             iterator it = begin();
             for (int i = 0; i <= max(a,b);++i,++it){
                if (i+1 == a)

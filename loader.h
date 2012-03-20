@@ -10,6 +10,7 @@ using namespace std;
 #include "linkedlist.h"
 #include "matrix.h"
 
+// Třída pro načítání transformací
 class Loader
 {
 public:

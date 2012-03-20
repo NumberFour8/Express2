@@ -76,7 +76,7 @@ Loader::~Loader()
         delete &(*i);
 }
 
-// Vrátí řetězec s názvem transformace
+// Statická metoda vrátí řetězec s názvem transformace
 const char* Loader::getTransformString(TransformType Type)
 {
     switch (Type){
@@ -88,7 +88,7 @@ const char* Loader::getTransformString(TransformType Type)
     };
 }
 
-// Vrátí položku s typem transformace
+// Statická metoda vrátí položku s typem transformace
 Loader::TransformType Loader::getTransformType(string Name)
 {
     if (Name == "posunuti")
