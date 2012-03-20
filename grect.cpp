@@ -1,20 +1,13 @@
 #include "grect.h"
 
-GRect::GRect(int ID, float Size,short sAlpha) : nID(ID), fSize(Size), fDefaultSize(Size),
-    Border(112,27,224,sAlpha), Body(67,179,240,sAlpha), Corner(255,0,0,sAlpha) // Hlavní barvy
+GRect::GRect(int ID, float Size,short sAlpha) : nID(ID), bSelected(false), fSize(Size), fDefaultSize(Size),
+    Border(14,17,196,sAlpha), Body(67,179,240,sAlpha), Corner(255,0,0,sAlpha), Selected(242,10,234,sAlpha) // Hlavní barvy
 {
     pPoints = new QPointF[4];
     pPoints[0].setX(-Size); pPoints[0].setY(-Size);
     pPoints[1].setX(Size);  pPoints[1].setY(-Size);
     pPoints[2].setX(Size);  pPoints[2].setY(Size);
     pPoints[3].setX(-Size); pPoints[3].setY(Size);
-
-}
-
-
-GRect::~GRect()
-{
-    delete[] pPoints;
 }
 
 // Zresetuj útvar na výchozí polohu
@@ -25,6 +18,7 @@ void GRect::reset()
     pPoints[2].setX(fDefaultSize);  pPoints[2].setY(fDefaultSize);
     pPoints[3].setX(-fDefaultSize); pPoints[3].setY(fDefaultSize);
     fSize = fDefaultSize;
+    bSelected = false;
 }
 
 // Konvertuje bod na vektor
@@ -52,10 +46,11 @@ void GRect::transform(const Matrix<float>& T)
 
 void GRect::paint(QPainter *painter, const QStyleOptionGraphicsItem*, QWidget *)
 {
-
     // Vykresli polygon
     painter->setPen(Border);
-    painter->setBrush(Body);
+    if (bSelected)
+      painter->setBrush(Selected);
+    else painter->setBrush(Body);
     painter->drawPolygon(pPoints,4);
 
     painter->setPen(Qt::black);

@@ -27,19 +27,21 @@ class MainWindow : public QMainWindow
     // ui->transformList pro seznam transformaci vlevo v okne
     Ui::MainWindow *ui;
 
+    const QRect SceneRect; // Rozsah scény
     const int nScalingFactor; // Škálovací faktor
+
     Loader MyLoader;
     GRect **MyObjects;
     QGraphicsScene *MyScene;
 
-
-    void Render();
-    void TransformAndUpdate();
+    void MakeScene();
+    void TransformAndUpdateList();
     void AddTransformToList(const int& id,const Loader::Transform& Tr);
 
   private slots:
     void moveItemUp ();
     void moveItemDown ();
+    void itemChanged();
 
 };
 

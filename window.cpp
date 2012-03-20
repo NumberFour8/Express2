@@ -1,27 +1,29 @@
 #include "window.h"
 #include "ui_form.h"
 
+
 MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent), ui(new Ui::MainWindow), nScalingFactor(20), MyLoader("test.txt",nScalingFactor)
+    : QMainWindow(parent), ui(new Ui::MainWindow),
+      SceneRect(-600,-600,1200,1200), nScalingFactor(20),
+      MyLoader("test.txt",nScalingFactor)
 {
   ui->setupUi(this); 
 
   // Vytvoř scénu
   MyScene = new QGraphicsScene;
-  MyScene->setSceneRect(-600,-600,1200,1200);
+  MyScene->setSceneRect(SceneRect);
 
   // Vytvoř tolik objektů, kolik bylo načtených transformací (vždycky bude načtena minimálně jedna a to počáteční poloha)
   MyObjects = new GRect*[MyLoader.getTransforms().count()];
   for (int i = 0;i < MyLoader.getTransforms().count();++i)
-      MyObjects[i] = new GRect(i,20.0f,200);
+      MyObjects[i] = new GRect(i,20.0f,180);
 
   // Nabinduj scénu na prohlížeč
   ui->view->setScene(MyScene);
 
   // Proveď transformace, updatuj popisky a vyrenderuj
-  TransformAndUpdate();
-  Render();
-
+  TransformAndUpdateList();
+  MakeScene();
 }
 
 MainWindow::~MainWindow()
@@ -37,8 +39,10 @@ MainWindow::~MainWindow()
 }
 
 // Aplikuje všechny transformace a vypíše seznam vlevo
-void MainWindow::TransformAndUpdate()
+void MainWindow::TransformAndUpdateList()
 {
+    ui->transformList->clear();
+
     // Začneme s jednotkovou maticí
     Matrix<float> MyMatrix(3,3);
     MyMatrix.identity();
@@ -72,8 +76,8 @@ void MainWindow::AddTransformToList(const int& id,const Loader::Transform &Tr)
 
 }
 
-// Vyrenderuje scénu
-void MainWindow::Render()
+// Vytvoří scénu
+void MainWindow::MakeScene()
 {
     QColor grid(0xcc,0xc6,0xc6);
     QColor cross(83,83,83);
@@ -93,11 +97,39 @@ void MainWindow::Render()
 
 void MainWindow::moveItemUp ()
 {
-  // tento slot je zavolan, kdyz nekdo stiskne tlacitko nahoru
+   int cr = ui->transformList->currentRow();
+
+    // První a druhý se nesmí přesouvat nahoru
+   if (cr <= 1) return;
+
+   MyLoader.getTransforms().swap(cr,cr-1);
+   TransformAndUpdateList();
+
+   ui->transformList->setCurrentRow(cr-1);
+   MyScene->update(SceneRect);
 }
 
 
 void MainWindow::moveItemDown ()
 {
-  // tento slot je zavolan, kdyz nekdo stiskne tlacitko dolu  
+    int cr = ui->transformList->currentRow();
+
+    // První a poslední se nesmí přesouvat dolů
+    if (cr == ui->transformList->count()-1 || cr <= 0) return;
+
+    MyLoader.getTransforms().swap(cr,cr+1);
+    TransformAndUpdateList();
+
+    ui->transformList->setCurrentRow(cr+1);
+    MyScene->update(SceneRect);
+}
+
+
+void MainWindow::itemChanged()
+{
+    // Vyber ten který je označen
+    for (int i = 0;i < MyLoader.getTransforms().count();++i)
+      MyObjects[i]->selectMe(ui->transformList->currentRow()==i);
+
+    MyScene->update(SceneRect);
 }

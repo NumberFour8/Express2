@@ -96,31 +96,35 @@ public:
             return ret;
         }
 
-        void swap(iterator a,iterator b)
+        void swap(const int a,const int b)
         {
+            assert(a >= 0 && b >= 0 && max(a,b) < nCount);
             if (a == b) return;
 
-            ListNode* prevA = NULL,*prevB = NULL,*t = NULL;
-            for (iterator i = begin();i != end();++i){
-                if (i == a) prevA = t;
-                else if (i == b) prevB = t;
-                t = i.pCurrent;
+            ListNode* prevA,*A,*prevB,*B,*t;
+            iterator it = begin();
+            for (int i = 0; i <= max(a,b);++i,++it){
+               if (i+1 == a)
+                 prevA = it.pCurrent;
+               if (i == a)
+                 A = it.pCurrent;
+               if (i+1 == b)
+                 prevB = it.pCurrent;
+               if (i == b)
+                 B = it.pCurrent;
             }
 
-            if (prevA != NULL)
-              prevA->pNext = b.pCurrent;
-            if (prevB != NULL)
-              prevB->pNext = a.pCurrent;
+            t = prevA->pNext;
+            prevA->pNext = B;
+            prevB->pNext = t;
 
-            if (a == begin()) pHead = b.pCurrent;
-            else if (b == begin()) pHead = a.pCurrent;
+            t = A->pNext;
+            A->pNext = B->pNext;
+            B->pNext = t;
 
-            if (a == end()) pTail = b.pCurrent;
-            else if (b == end()) pTail = a.pCurrent;
+            if (a == 0) pHead = B;
+            else if (b == 0) pHead = A;
 
-            t = a.pCurrent->pNext;
-            a.pCurrent->pNext = b.pCurrent->pNext;
-            b.pCurrent->pNext = t;
         }
 
         int count() const { return nCount; }
