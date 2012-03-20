@@ -1,0 +1,20 @@
+EXPRESS 2
+
+Zápočtový program pro předmět Programování v C++ 2 (PRC2)
+Autor: Lukáš Pohanka, ZS2, FJFI ČVUT, 2012
+
+POPIS
+=====================================================
+Program dle zadání + bonusové úkoly.
+
+POŽADAVKY
+=====================================================
+Qt 4.7.2
+
+KOMPILACE
+=====================================================
+Pomocí Qt Creatoru 2.10
+
+ZNÁMÉ CHYBY
+=====================================================
+Valgrind našel memory leaky uvnitř knihovny Qt.
