@@ -3,6 +3,9 @@
 
 #include <QtGui/QMainWindow>
 #include <QTextStream>
+#include <QFileDialog>
+#include <QMessageBox>
+
 #include "loader.h"
 #include "grect.h"
 
@@ -34,7 +37,8 @@ class MainWindow : public QMainWindow
     GRect **MyObjects;
     QGraphicsScene *MyScene;
 
-    void MakeScene();
+    void MakeObjects();
+    void MakeGrid();
     void TransformAndUpdateList();
     void AddTransformToList(const int& id,const Loader::Transform& Tr);
 
@@ -42,6 +46,7 @@ class MainWindow : public QMainWindow
     void moveItemUp ();
     void moveItemDown ();
     void itemChanged();
+    void open();
 
 };
 

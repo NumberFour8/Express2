@@ -46,6 +46,7 @@
     <property name="title">
      <string>Aplikace</string>
     </property>
+    <addaction name="actionOtevrit_soubor"/>
     <addaction name="actionKonec"/>
    </widget>
    <addaction name="menuAplikace"/>
@@ -152,6 +153,16 @@
     <string>Konec</string>
    </property>
   </action>
+  <action name="actionOtev_t_soubor">
+   <property name="text">
+    <string>Otevřít soubor</string>
+   </property>
+  </action>
+  <action name="actionOtevrit_soubor">
+   <property name="text">
+    <string>Otevrit soubor</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections>
@@ -219,10 +230,27 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>actionOtevrit_soubor</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>open()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>53</x>
+     <y>15</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>669</x>
+     <y>29</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>moveItemUp()</slot>
   <slot>moveItemDown()</slot>
   <slot>itemChanged()</slot>
+  <slot>open()</slot>
  </slots>
 </ui>

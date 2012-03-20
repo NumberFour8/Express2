@@ -22,6 +22,7 @@ public:
     int getRows() const { return rows; }
     int getCols() const { return cols; }
 
+    // Vytvoří jednotkovou matici
     void identity()
     {
         assert(cols==rows);
@@ -32,6 +33,7 @@ public:
     T& operator[] (const int& index) const { return pElem[index]; }
     T& operator() (const int i,const int j) const { return getElem(i,j); }
 
+    // Násobení matice vektorem
     Vector<T> operator*(Vector<T>& V) const
     {
         int sz = V.size();
@@ -46,6 +48,7 @@ public:
         return Ret;
     }
 
+    // Násobení matice s maticí (není obecně komutativní)
     Matrix<T> operator*(const Matrix<T>& M) const
     {
         assert(M.getRows()==cols);
@@ -61,6 +64,7 @@ public:
         return Ret;
     }
 
+    // Vlastní operátor přiřazení pro deep-copy
     Matrix<T>& operator=(const Matrix<T>& M)
     {
         if (&M != this){
@@ -77,6 +81,7 @@ public:
         return *this;
     }
 
+    // Spřátelené sčítání matic (komutativní)
     template <class U>
     friend Matrix<U> operator+(const Matrix<U>& A,const Matrix<U>& B)
     {
@@ -88,6 +93,7 @@ public:
         return Ret;
     }
 
+    // Spřátelené porovnání matic
     template <class U>
     friend bool operator==(const Matrix<U>& A,const Matrix<U>& B)
     {
@@ -104,6 +110,7 @@ private:
     T* pElem;
     int rows,cols;
 
+    // Vnitřní inline metoda pro přepočet souřadnic do 1D pole
     inline T& getElem(const int i,const int j) const { return pElem[i*cols+j]; }
 };
 

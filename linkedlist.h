@@ -4,10 +4,12 @@
 #include <stdlib.h>
 #include <assert.h>
 
+// Třída spojového seznamu
 template <class T>
 class LinkedList
 {
 private:
+    // Prvek v seznamu
     class ListNode
     {
         friend class LinkedList;
@@ -42,6 +44,7 @@ public:
         }
     }
 
+    // Přidání prvku na konec seznamu
     void pushback(T& item)
     {
         ListNode *node = new ListNode(item);
@@ -54,6 +57,7 @@ public:
         ++nCount;
     }
 
+    // Vlastní dopředný iterátor
     class iterator
     {
         friend class LinkedList;
@@ -92,10 +96,11 @@ public:
         iterator end() const
         {
             iterator ret;
-            ret.pCurrent = /*pTail->pNext*/NULL;
+            ret.pCurrent = NULL; // Zarážka, poslední prvek musí mít pNext rovno NULL
             return ret;
         }
 
+        // Metoda pro výměnu dvou prvků na daných pozicích
         void swap(const int a,const int b)
         {
             assert(a >= 0 && b >= 0 && max(a,b) < nCount);
@@ -127,6 +132,7 @@ public:
 
         }
 
+        // Počet prvků v seznamu
         int count() const { return nCount; }
 };
 

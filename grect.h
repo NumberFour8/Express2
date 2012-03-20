@@ -9,6 +9,7 @@
 #include "vector.h"
 #include "matrix.h"
 
+// Třída pro vykreslovaný čtverec
 class GRect : public QGraphicsItem
 {
     public:
@@ -20,10 +21,8 @@ class GRect : public QGraphicsItem
         void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
         void reset();
-
-        void selectMe(bool select) { bSelected = select; }
-
         void transform(const Matrix<float>& T);
+        void selectMe(bool select) { bSelected = select; }
 
         static Vector<float> Point2Vector(const QPointF& pt);
         static QPointF Vector2Point(const Vector<float>& v) { return QPointF(v[0],v[1]); }
@@ -36,7 +35,6 @@ class GRect : public QGraphicsItem
         const float fDefaultSize;
 
         QPointF *pPoints;
-
         QColor Border,Body,Corner,Selected;
 };
 

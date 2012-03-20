@@ -8,12 +8,11 @@ class Vector
 {
 public:
     Vector(int Size) : nSize(Size)
-    {
-        pElem = new T[Size]();
-    }
+    {  pElem = new T[Size]();   }
 
     ~Vector() { delete[] pElem;  }
 
+    // Skalární součin dvou vektorů
     T scalarMultiply(const Vector<T>& v) const
     {
         T ret;
@@ -22,11 +21,12 @@ public:
         return ret;
     }
 
-    T magnitude() const {  return sqrt(scalarMultiply(*this)); }
-    int size() const { return nSize; }
+    T magnitude() const {  return sqrt(scalarMultiply(*this)); } // Velikost vektorů
+    int size() const { return nSize; } // Počet složek vektoru
 
     T& operator[](const int& index) const { return pElem[index]; }
 
+    // Vlastní operátor přiřazení pro deep-copy
     Vector<T>& operator=(const Vector<T>& V)
     {
         if (&V != this){

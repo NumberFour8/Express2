@@ -4,6 +4,7 @@
 #include <math.h>
 #include <iostream>
 #include <fstream>
+#include <locale>
 using namespace std;
 
 #include "linkedlist.h"
@@ -20,9 +21,10 @@ public:
         Transform() : T(3,3) { type = ttUnknown; p1 = p2 = 0; }
     };
 
-    Loader(const char* szFile,int ScalingFactor);
+    Loader() : transforms() { }
     ~Loader();
 
+    bool load(const char* szFile,int ScalingFactor);
     LinkedList<Transform>& getTransforms() { return transforms; }
 
     static const char* getTransformString(TransformType Type);
