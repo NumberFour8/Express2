@@ -51,6 +51,8 @@ bool Loader::load(const char* szFile,int ScalingFactor)
                     file >> p1 >> p2;
                     Tr->p1 = ::atof(p1.c_str());
                     Tr->p2 = ::atof(p2.c_str());
+                    if (Tr->p1 == 0) Tr->p1 = 1;
+                    if (Tr->p2 == 0) Tr->p2 = 1;
 
                     Tr->T(0,0) = Tr->p1; Tr->T(0,1) = 0;      Tr->T(0,2) = 0;
                     Tr->T(1,0) = 0;      Tr->T(1,1) = Tr->p2; Tr->T(1,2) = 0;
